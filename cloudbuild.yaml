@@ -1,5 +1,5 @@
 steps:
-- name: 'bash'
+- name: 'ubuntu'
   args: ['zip', 'artifacts.zip' ,'-r', './app']
 artifacts:
   objects:
