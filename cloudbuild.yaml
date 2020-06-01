@@ -1,15 +1,11 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/myapp:latest', '-t', 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/myapp:latest', '-t', 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA','-t', 'gcr.io/$PROJECT_ID/myapp:$BUILD_ID', '.']
   id: 'build-image-myapp'
   waitFor: ['-']  # The '-' indicates that this step begins immediately.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
-  args: ['gcloud', 'builds', 'log', '$BUILD_ID', '&>buildlog.log']
-  waitFor: ['build-image-myapp']
-  id: 'fetch-build-log'
 - name: 'bash'
   args: ['tar', '-czvf', 'artifacts.tar.gz', 'app', 'requirements.txt']
-  waitFor: ['fetch-build-log']
+  waitFor: ['build-image-myapp']
   id: 'create-artifacts-zip'
 logsBucket: 'gs://logs-codebuild-$PROJECT_ID/$BUILD_ID'
 options:
@@ -17,6 +13,7 @@ options:
 images:
 - 'gcr.io/$PROJECT_ID/myapp:latest'
 - 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA'
+- 'gcr.io/$PROJECT_ID/myapp:$BUILD_ID'
 artifacts:
   objects:
     location: 'gs://devops-$PROJECT_ID/$BUILD_ID'
