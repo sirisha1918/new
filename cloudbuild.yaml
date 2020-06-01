@@ -1,8 +1,16 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/myapp:latest', '-t', 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA', '-t', 'gcr.io/$PROJECT_ID/myapp:$BUILD_ID', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/myapp:latest', '-t', 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA', '.']
+  id: 'build-image-myapp'
+  waitFor: ['-']  # The '-' indicates that this step begins immediately.
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['gcloud', 'builds', 'log', '$BUILD_ID', '>buildlog.log',]
+  waitFor: ['build-image-myapp']
+  id: 'fetch-build-log'
 - name: 'bash'
-  args: ['tar', '-czvf', 'artifacts.tar.gz', 'app', 'requirements.txt']
+  args: ['tar', '-czvf', 'artifacts.tar.gz', 'app', 'requirements.txt', 'buildlog.log']
+  waitFor: ['fetch-build-log']
+  id: 'create-artifacts-zip'
 logsBucket: 'gs://logs-codebuild-$PROJECT_ID/$BUILD_ID'
 options:
   logging: GCS_ONLY
