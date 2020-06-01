@@ -1,8 +1,8 @@
 steps:
 - name: 'bash'
-  args: ['tar', '-czvf', 'myapp.tar.gz', 'app']
+  args: ['tar', '-czvf', 'artifacts.tar.gz', 'app']
 
 artifacts:
   objects:
     location: 'gs://devops-$PROJECT_ID/$COMMIT_SHA'
-    paths: ['artifacts.zip']
+    paths: ['artifacts.tar.gz']
