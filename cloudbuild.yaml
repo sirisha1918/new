@@ -2,7 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/myapp:latest', '-t', 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA', '.']
 - name: 'bash'
-  args: ['tar', '-czvf', 'artifacts.tar.gz', 'app']
+  args: ['tar', '-czvf', 'artifacts.tar.gz', 'app', 'requirements.txt']
 images:
 - 'gcr.io/$PROJECT_ID/myapp:latest'
 - 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA'
