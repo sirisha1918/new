@@ -4,3 +4,7 @@ steps:
 images:
 - 'gcr.io/$PROJECT_ID/myapp:latest'
 - 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA'
+artifacts:
+  objects:
+    location: 'gs://devops-$PROJECT_ID/$COMMIT_SHA'
+    paths: ['./app']
