@@ -1,6 +1,7 @@
 steps:
-- name: 'ubuntu'
-  args: ['zip', 'artifacts.zip' ,'-r', './app']
+- name: 'bash'
+  args: ['tar', '-czvf', 'myapp.tar.gz', 'app']
+
 artifacts:
   objects:
     location: 'gs://devops-$PROJECT_ID/$COMMIT_SHA'
