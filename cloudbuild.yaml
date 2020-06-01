@@ -1,6 +1,5 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/sample-repo-1/myapp', '.']
-tags: ["$SHORT_SHA", 'latest']
 images:
 - 'gcr.io/sample-repo-1/myapp'
