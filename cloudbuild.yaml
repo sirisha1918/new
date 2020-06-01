@@ -3,4 +3,3 @@ steps:
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/myapp', '.']
 images:
 - 'gcr.io/$PROJECT_ID/myapp'
-- 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA'
