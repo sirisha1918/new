@@ -1,5 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/myapp', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/myapp:latest', '-t', 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA', '.']
 images:
-- 'gcr.io/$PROJECT_ID/myapp'
+- 'gcr.io/$PROJECT_ID/myapp:latest'
+- 'gcr.io/$PROJECT_ID/myapp:$COMMIT_SHA'
