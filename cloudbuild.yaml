@@ -7,4 +7,4 @@ images:
 artifacts:
   objects:
     location: 'gs://devops-$PROJECT_ID/$COMMIT_SHA'
-    paths: ['./app']
+    paths: ['app']
